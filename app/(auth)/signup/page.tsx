@@ -4,7 +4,16 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 
 
@@ -14,7 +23,7 @@ export default function SignupPage() {
     email: "",
     password: "",
     firstname: "",
-    lastname:""
+    lastname: ""
   })
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -24,6 +33,7 @@ export default function SignupPage() {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
       console.log("Signup success", response.data);
+      toast.success("Signup success");
       router.push("/login");
 
     } catch (error: any) {
@@ -36,7 +46,7 @@ export default function SignupPage() {
   }
 
   useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0 && user.firstname.length  && user.lastname.length >0) {
+    if (user.email.length > 0 && user.password.length > 0 && user.firstname.length && user.lastname.length > 0) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -44,51 +54,71 @@ export default function SignupPage() {
   }, [user]);
 
 
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading ? "Processing" : "Signup"}</h1>
+      <h1>{loading ? "Processing" : ""}</h1>
       <hr />
-      <label htmlFor="firstname">First Name</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="firstname"
-        type="text"
-        value={user.firstname}
-        onChange={(e) => setUser({ ...user, firstname: e.target.value })}
-        placeholder="firstname"
-      />
-       <label htmlFor="lastname">Last Name</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="lastname"
-        type="text"
-        value={user.lastname}
-        onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-        placeholder="lastname"
-      />
-      <label htmlFor="email">email</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="email"
-        type="text"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-        placeholder="email"
-      />
-      <label htmlFor="password">password</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-        id="password"
-        type="password"
-        value={user.password}
-        onChange={(e) => setUser({ ...user, password: e.target.value })}
-        placeholder="password"
-      />
-      <button
-        onClick={onSignup}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">{buttonDisabled ? "No signup" : "Signup"}</button>
-      <Link href="/login">Visit login page</Link>
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardDescription>
+            Enter your information to create an account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="firstname">First name</Label>
+                <Input
+                  id="firstname"
+                  type="text"
+                  value={user.firstname}
+                  onChange={(e) => setUser({ ...user, firstname: e.target.value })} placeholder="Max" required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="lastname">Last name</Label>
+                <Input id="lastname"
+                  type="text"
+                  value={user.lastname}
+                  onChange={(e) => setUser({ ...user, lastname: e.target.value })} placeholder="Robinson" required />
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                type="email"
+                placeholder="@directv.com"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password"
+                type="password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })} />
+            </div>
+            <Button type="submit" className="w-full" onClick={onSignup}>
+              Create an account
+            </Button>
+
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="underline">
+              Sign in
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
+
+
   )
 
 }

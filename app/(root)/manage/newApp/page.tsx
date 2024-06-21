@@ -1,10 +1,12 @@
 import PageTitle from '@/components/PageTitle'
+import NewApp from '@/components/forms/NewApp'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-            <PageTitle title="Dashboard" />
+      <PageTitle title='Create a new Application'/>
+      <NewApp/>
     </div>
   )
 }

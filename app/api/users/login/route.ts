@@ -1,14 +1,14 @@
-import {connect} from "@/dbConfig/dbConfig";
+import {connectToDB} from "@/dbConfig/dbConfig";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-connect()
+
 
 export async function POST(request: NextRequest){
     try {
-
+        connectToDB();
         const reqBody = await request.json()
         const {email, password} = reqBody;
         console.log(reqBody);

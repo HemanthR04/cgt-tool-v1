@@ -1,17 +1,18 @@
-import {connect} from "@/dbConfig/dbConfig";
+import {connectToDB} from "@/dbConfig/dbConfig";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
 
 
-connect()
+
 
 
 export async function POST(request: NextRequest){
     try {
+        connectToDB();
         const reqBody = await request.json()
-        const {firstname,lastname, email, password} = reqBody
+        const {firstname,lastname, email, password,applications} = reqBody
 
         console.log(reqBody);
 
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest){
             firstname,
             lastname,
             email,
+            applications,
             password: hashedPassword
         })
 

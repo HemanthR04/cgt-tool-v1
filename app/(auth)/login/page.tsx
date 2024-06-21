@@ -3,9 +3,19 @@ import Link from "next/link";
 import React, {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 
 
@@ -26,7 +36,7 @@ export default function LoginPage() {
             const response = await axios.post("/api/users/login", user);
             console.log("Login success", response.data);
             toast.success("Login success");
-            router.push("/profile");
+            router.push("/");
         } catch (error:any) {
             console.log("Login failed", error.message);
             toast.error(error.message);
@@ -45,31 +55,55 @@ export default function LoginPage() {
 
     return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <h1>{loading ? "Processing" : "Login"}</h1>
+      <div><Toaster/></div>
+      <h1 className="text-5xl font-bold my-12">Welcome to CGT Tool</h1>
+        <h1>{loading ? "Processing" : ""}</h1>
         <hr />
-        
-        <label htmlFor="email">email</label>
-        <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="email"
-            type="text"
-            value={user.email}
+        <Card className="mx-auto max-w-sm">
+      <CardHeader>
+        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardDescription>
+          Enter your email below to login to your account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={user.email}
             onChange={(e) => setUser({...user, email: e.target.value})}
-            placeholder="email"
+              placeholder="@directv.com"
+              required
             />
-        <label htmlFor="password">password</label>
-        <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="password"
-            type="password"
+          </div>
+          <div className="grid gap-2">
+            <div className="flex items-center">
+              <Label htmlFor="password">Password</Label>
+              <Link href="#" className="ml-auto inline-block text-sm underline">
+                Forgot your password?
+              </Link>
+            </div>
+            <Input id="password" type="password" required 
             value={user.password}
-            onChange={(e) => setUser({...user, password: e.target.value})}
-            placeholder="password"
-            />
-            <button
-            onClick={onLogin}
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
-            <Link href="/signup">Visit Signup page</Link>
+            onChange={(e) => setUser({...user, password: e.target.value})}/>
+          </div>
+          <Button type="submit" className="w-full"  onClick={onLogin}>
+            Login
+          </Button>
+         
+        </div>
+        <div className="mt-4 text-center text-sm">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="underline">
+            Sign up
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
+        
         </div>
     )
 

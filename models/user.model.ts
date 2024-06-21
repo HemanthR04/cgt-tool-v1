@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        required: [true, "Please provide a username"],
+        required: [true, "Please provide a firstname"],
        
     },
     lastname: {
         type: String,
-        required: [true, "Please provide a username"],
+        required: [true, "Please provide a lastname"],
         
     },
     email: {
@@ -24,16 +24,20 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
+    role: {
+        type: String,
+        enum: ['user', 'primaryadmin','secondaryadmin'],
+        default: 'user',
     },
+    applications:[
+        { type: Schema.Types.ObjectId, ref: 'Application' }
+    ],
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
 })
 
-const User = mongoose.models.users || mongoose.model("users", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

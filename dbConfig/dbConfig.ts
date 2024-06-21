@@ -1,24 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export async function connect() {
-    try {
-        mongoose.connect(process.env.MONGODB_URI!);
-        const connection = mongoose.connection;
+let isConnected: boolean = false;
 
-        connection.on('connected', () => {
-            console.log('MongoDB connected successfully');
-        })
+export const connectToDB = async (): Promise<void> => {
+  mongoose.set("strictQuery", true)
 
-        connection.on('error', (err) => {
-            console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err);
-            process.exit();
-        })
+  if (isConnected) {
+    console.log("MongoDB is already connected");
+    return;
+  }
 
-    } catch (error) {
-        console.log('Something goes wrong!');
-        console.log(error);
-        
-    }
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || "", {
+      dbName: "CGT_Admin"
+    })
 
-
+    isConnected = true;
+    console.log("MongoDB is connected");
+  } catch (err) {
+    console.log(err)
+  }
 }

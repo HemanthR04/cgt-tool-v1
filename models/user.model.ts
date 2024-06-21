@@ -3,10 +3,10 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        required: [true, "Please provide a firstname"],
+        required: [true, "Please provide    firstname"],
        
     },
-    lastname: {
+    lastname: { 
         type: String,
         required: [true, "Please provide a lastname"],
         

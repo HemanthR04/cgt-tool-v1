@@ -15,6 +15,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Router } from "next/router"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import axios from "axios"
+import toast, { Toaster } from "react-hot-toast"
 
 
 
@@ -25,6 +28,8 @@ const formSchema = z.object({
 
 const NewApp = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  
 
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -34,15 +39,30 @@ const NewApp = () => {
       applicationDescription:"",
     },
   })
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+ async function onSubmit(values: z.infer<typeof formSchema>) {
+    
     console.log(values);
-    router.push('/manage/newApp/addURL ')
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/applications/createApplication", values);
+      console.log("Application created successfully", response.data);
+      toast.success(" success");
+      router.push("/manage/newApp/addURL");
+
+    } catch (error: any) {
+      console.log(" failed", error.message);
+
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+   
+   
   }
   return (
     
-    <div className="max-w-[600px] border-2 p-8 rounded-md mt-[100px]">
+    <div className="max-w-[600px] border-2 p-8 rounded-md mt-12">
+      <div><Toaster/></div>
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField

@@ -13,11 +13,11 @@ interface ErrorResponse {
   
   export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const { id } = params;
-  
     try {
       connectToDB();
   
-      const applicationDetails = await ApplicationModel.findOne({ _id: id });
+      const applicationDetails = await ApplicationModel.findOne({ _id: id }).populate("admins")
+      console.log(applicationDetails) 
   
       if (!applicationDetails) {
         const errorResponse: ErrorResponse = { error: 'Application not found' };

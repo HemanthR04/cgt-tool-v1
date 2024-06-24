@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ArrowRightIcon } from "lucide-react";
 
 
 
@@ -103,8 +104,9 @@ export default function SignupPage() {
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })} />
             </div>
-            <Button type="submit" className="w-full" onClick={onSignup}>
-              Create an account
+           
+            <Button type="submit" onClick={onSignup} variant="expandIcon" Icon={ArrowRightIcon} iconPlacement="right">
+            Create an account
             </Button>
 
           </div>

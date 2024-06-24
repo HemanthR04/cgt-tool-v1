@@ -1,15 +1,34 @@
-import ManageApp from '@/components/ManageApp'
-import PageTitle from '@/components/PageTitle'
-import Link from 'next/link'
-import React from 'react'
+import Link from "next/link";
 
-const page = () => {
+
+import { ContentLayout } from "@/components/admin-panel/content-layout";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
+import ManageApp from "@/components/ManageApp";
+
+export default function AccountPage() {
   return (
-    <div>
-            <PageTitle title="Manage Application" />
-            <ManageApp/>
-    </div>
-  )
+    <ContentLayout title="Manage">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Manage</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <ManageApp/>
+    </ContentLayout>
+  );
 }
-
-export default page

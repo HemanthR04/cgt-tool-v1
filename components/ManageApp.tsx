@@ -22,12 +22,7 @@ const managedata =[
         btn:"Manage URLs",
         href:"/manage/manageURLs"
     },
-    // {
-    //     title: 'Manage Releases',
-    //     Description: 'Add or manage releases for an existing application',
-    //     btn:"Manage Releases",
-    //     href:"/newApp"
-    // },
+    
     {
         title: 'Manage Adminstrators',
         Description: 'Add or manage Adminstrators for applications',

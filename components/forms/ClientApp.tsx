@@ -24,6 +24,13 @@ import {
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "../ui/input"
+import { useEffect, useState } from "react"
+
+
+interface Application {
+  _id: string;
+  applicationName: string;
+}
 
 const FormSchema = z.object({
   applicationName: z
@@ -40,6 +47,14 @@ const FormSchema = z.object({
 })
 
 export function ClientApp() {
+  const [values, setValues] = useState<Application[]>([])
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/applications/fetchApplications")
+      .then((data) => data.json())
+      .then((val) => setValues(val.apps))
+  }, [])
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
@@ -57,7 +72,7 @@ export function ClientApp() {
   }
 
   return (
-    <div className="max-w-[60%] border-2 rounded-md p-12 mt-[100px]">
+    <div className="w-[800px] border-2 rounded-md p-12 mt-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
@@ -73,9 +88,9 @@ export function ClientApp() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
+                {values.map((opts, i) => (
+                      <SelectItem key={i} value={opts._id}>{opts.applicationName}</SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               <FormDescription>

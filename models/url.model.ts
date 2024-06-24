@@ -7,14 +7,19 @@ const urlSchema = new mongoose.Schema({
       name:String,
       url:String
     }],
-    application:[{ type: mongoose.Schema.Types.ObjectId, ref: "Application" }],
+    environment:{
+      type: String,
+      enum: ['ETE1', 'ETE2'],
+      required: true,
+    },
+    application:{ type: mongoose.Schema.Types.ObjectId, ref: "Application" },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   }, { toJSON: { getters: true } });
   
 
-const URL =
-  mongoose.models.URL ||
-  mongoose.model("URL", urlSchema);
+const URLS =
+  mongoose.models.URLS ||
+  mongoose.model("URLS", urlSchema);
 
-export default URL;
+export default URLS;

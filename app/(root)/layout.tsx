@@ -4,8 +4,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
-import SideNavbar from "@/components/SideBar";
+
 import { Toaster } from "@/components/ui/toaster"
+import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
+import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,15 +25,14 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen w-full bg-white text-black flex ",
-          inter.className,
-          
+          inter.className,        
         )}
-      >
-       
-        <SideNavbar />
-        
-        <div className="p-8 w-full">
-        <Toaster />{children}</div>
+      > 
+        <div className="w-full">
+        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AdminPanelLayout>{children}</AdminPanelLayout>
+          </ThemeProvider></div>
       </body>
     </html>
   );

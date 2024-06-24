@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        required: [true, "Please provide    firstname"],
+        required: [true, "Please provide a firstname"],
        
     },
     lastname: { 
@@ -24,11 +24,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    role: {
-        type: String,
-        enum: ['user', 'primaryadmin','secondaryadmin'],
-        default: 'user',
-    },
+   isAdmin : {
+        type: Boolean,
+        default: false,
+   },
     applications:[
         { type: Schema.Types.ObjectId, ref: 'Application' }
     ],

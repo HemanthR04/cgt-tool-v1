@@ -38,11 +38,15 @@ interface Userdata {
 export function UserNav() {
   const [values, setValues] = useState<Application[]>([])
   const [fetchedData, setFetchedData] = useState<Userdata>();
+
+
   useEffect(() => {
     fetch("http://localhost:3000/api/users/profile")
       .then((data) => data.json())
       .then((val) => setFetchedData(val.data))
   }, [])
+
+
   console.log(fetchedData)
   return (
     <DropdownMenu>

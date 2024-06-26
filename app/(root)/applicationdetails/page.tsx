@@ -87,7 +87,7 @@ const page = () => {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      if (data.name === 'BOTH') {
+      if (data.name === 'ALL') {
         const responseData: any = await (await fetch(`http://localhost:3000/api/urls/fetchUrl/${data.id}`)).json()
         setFetchedData(responseData);
         return
@@ -175,7 +175,15 @@ const page = () => {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="BOTH" />
+                          <RadioGroupItem value="ETE2" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          R3
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="ALL" />
                         </FormControl>
                         <FormLabel className="font-normal">All  </FormLabel>
                       </FormItem>

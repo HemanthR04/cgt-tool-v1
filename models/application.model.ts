@@ -7,6 +7,7 @@ const applicationSchema = new mongoose.Schema({
     unique: true,
   },
   applicationDescription: String,
+  ApplicationIPAddress: String,
   admins: [
     {
       type: mongoose.Schema.Types.ObjectId,

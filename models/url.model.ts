@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const urlSchema = new mongoose.Schema({
     type: String,
     link: String,
+    apiendpoint: [String],
     clientApps: [{
       name:String,
       url:String

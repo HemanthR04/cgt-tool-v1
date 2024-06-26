@@ -23,7 +23,8 @@ import toast, { Toaster } from "react-hot-toast"
 
 const formSchema = z.object({
   applicationName: z.string().min(2).max(50),
-  applicationDescription:z.string().min(2).max(200)
+  applicationDescription:z.string().min(2).max(200),
+  applicationIPAddress:z.string().min(2).max(100)
 })
 
 const NewApp = () => {
@@ -37,6 +38,7 @@ const NewApp = () => {
     defaultValues: {
       applicationName: "",
       applicationDescription:"",
+      applicationIPAddress:"",
     },
   })
  async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -97,6 +99,23 @@ const NewApp = () => {
           </FormItem>
         )}
       />
+      <FormField
+        control={form.control}
+        name="applicationIPAddress"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Application IP Address</FormLabel>
+            <FormControl>
+              <Input placeholder="" {...field} />
+            </FormControl>
+            <FormDescription>
+              Enter the IP Address of your Application.
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      
         <Button type="submit">Submit</Button>
       </form>
     </Form>

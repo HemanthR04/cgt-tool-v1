@@ -1,4 +1,4 @@
-
+'use client'
  
 import PageTitle from '@/components/PageTitle';
 import { ClientApp } from '@/components/forms/ClientApp';
@@ -14,10 +14,29 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 
+import { useEffect, useState } from "react";
+
+interface Userdata {
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: string;
+}
+
 
 const page = () => {
 
- 
+  const [fetchedData, setFetchedData] = useState<Userdata>();
+  useEffect(() => {
+    fetch("http://localhost:3000/api/users/profile")
+      .then((data) => data.json())
+      .then((val) => setFetchedData(val.data))
+  }, [])
+  if (fetchedData?.role === 'user') {
+    return <>
+      <h1>You are not the Admin</h1>
+    </>;
+  }
     
   return (
     <div className=''>

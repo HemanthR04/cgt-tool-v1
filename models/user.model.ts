@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
    },
+   role: {
+    type: String,
+    enum: ['user', 'primaryadmin','secondaryadmin'],
+    default: 'user',
+},
    applications:[
          {
               type: Schema.Types.ObjectId,

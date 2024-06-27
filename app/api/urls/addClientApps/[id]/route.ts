@@ -26,7 +26,8 @@ console.log(id)
     const reqBody = await request.json();
     const { clientApps } = reqBody;
 
-   
+   console.log("clientApps clientAppName ===="+clientApps.clientAppName);
+   console.log("clientApps clientAppURL ===="+clientApps.clientAppURL);
 
   
     const updatedURL = await URLS.findByIdAndUpdate(

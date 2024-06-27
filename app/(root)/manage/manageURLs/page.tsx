@@ -1,3 +1,4 @@
+'use client'
 import PageTitle from '@/components/PageTitle'
 import NewURL from '@/components/forms/NewURL'
 import { Button } from '@/components/ui/button'
@@ -14,7 +15,26 @@ import {
 
 
 import Link from 'next/link';
+import { useEffect, useState } from "react";
+
+interface Userdata {
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: string;
+}
 const page = () => {
+  const [fetchedData, setFetchedData] = useState<Userdata>();
+  useEffect(() => {
+    fetch("http://localhost:3000/api/users/profile")
+      .then((data) => data.json())
+      .then((val) => setFetchedData(val.data))
+  }, [])
+  if (fetchedData?.role === 'user') {
+    return <>
+      <h1>You are not the Admin</h1>
+    </>;
+  }
   return (
     <div className=''>
       <ContentLayout title="New URL">

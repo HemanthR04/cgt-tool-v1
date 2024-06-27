@@ -22,6 +22,11 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
+interface Userdata {
+  _id: string;
+  role: string;
+}
+
 interface Application {
   _id: string;
   applicationName: string;
@@ -41,13 +46,27 @@ const formSchema = z.object({
 const NewURL = () => {
   const [values, setValues] = useState<Application[]>([])
   const [fetchedData, setFetchedData] = useState<Application[]>([])
+  const [fetchedUserData, setFetchedUserData] = useState<Userdata>();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/applications/fetchApplications")
+    fetch("http://localhost:3000/api/users/profile")
       .then((data) => data.json())
-      .then((val) => setValues(val.apps))
+      .then((val) => setFetchedData(val.data))
   }, [])
-
+    
+  if (fetchedUserData?.role === 'secondaryadmin') {
+    useEffect(() => {
+      fetch("http://localhost:3000/api/applications/fetchAdminApps?userId="+fetchedUserData?._id)
+        .then((data) => data.json())
+        .then((val) => setValues(val.apps))
+    }, [])
+  } else{
+    useEffect(() => {
+      fetch("http://localhost:3000/api/applications/fetchApplications")
+        .then((data) => data.json())
+        .then((val) => setValues(val.apps))
+    }, [])
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

@@ -29,6 +29,7 @@ interface Application {
 interface Userdata {
   _id: string;
   email: string;
+  role: string;
 }
 
 const formSchema = z.object({
@@ -68,8 +69,10 @@ const ManageAdmin = () => {
     try {
       console.log(data);
       setLoading(true);
+      const res = await axios.patch(`/api/users/userRole/${data.admins} `, data);
       const response = await axios.post(`/api/applications/addAdmin/${data.application} `, data);
       console.log("Adminstrator Added successfully", response.data);
+      console.log("Role updated successfully", res.data);
       toast.success(" Adminstrator Added successfully");
       
 

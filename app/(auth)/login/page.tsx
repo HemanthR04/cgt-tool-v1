@@ -6,7 +6,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-
+import Logo from "@/public/assets/logo.png";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ArrowRightIcon } from "lucide-react";
+import Image from "next/image";
 
 
 
@@ -56,7 +57,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-2">
-
+      <Image src={Logo} alt="logo" width={100} height={100}></Image>
       <div><Toaster /></div>
       <div className="relative overflow-hidden py-12 lg:py-20">
         <div className="container">

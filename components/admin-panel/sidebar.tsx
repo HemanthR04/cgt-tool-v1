@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "./menu";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { SidebarToggle } from "./sidebar-toggle";
+import Image from "next/image";
+import Logo from "@/public/assets/logo.png";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -22,6 +24,7 @@ export function Sidebar() {
     >
       <SidebarToggle isOpen={sidebar?.isOpen} setIsOpen={sidebar?.setIsOpen} />
       <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
+        <Image src={Logo} width={100} height={100} alt="logo" className="ml-[85px]"></Image>
         <Button
           className={cn(
             "transition-transform ease-in-out duration-300 mb-1",

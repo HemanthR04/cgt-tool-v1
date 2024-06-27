@@ -44,7 +44,8 @@ export default function page() {
           <BreadcrumbSeparator />
         </BreadcrumbList>
       </Breadcrumb>
-
+      <h1 className="text-5xl font-bold text-center mt-24">Welcome to Connectivity Grid tool - Beta</h1>
+      <p className="text-center text-xl mt-12">Developed by TDM-IBM</p>
     </ContentLayout>
   );
 }

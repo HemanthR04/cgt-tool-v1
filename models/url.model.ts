@@ -3,14 +3,13 @@ import mongoose, { Schema } from "mongoose";
 const urlSchema = new mongoose.Schema({
     type: String,
     link: String,
-    apiendpoint: [String],
     clientApps: [{
       name:String,
       url:String
     }],
     environment:{
       type: String,
-      enum: ['ETE1', 'ETE2'],
+      enum: ['ETE1', 'ETE2','R1'],
       required: true,
     },
     application:{ type: mongoose.Schema.Types.ObjectId, ref: "Application" },

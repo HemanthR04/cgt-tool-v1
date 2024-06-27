@@ -11,7 +11,7 @@ export async function POST(request: NextRequest){
     connectToDB();
     try {
         const reqBody = await request.json()
-        const {applicationName,applicationDescription, admins,ETE1,ETE2} = reqBody
+        const {applicationName,applicationDescription,applicationIpAddress, applicationMOTSId,hostDetails,admins,} = reqBody
 
         console.log(reqBody);
 
@@ -27,10 +27,11 @@ export async function POST(request: NextRequest){
         const newApplication = new ApplicationModel({
             applicationName,
             applicationDescription,
+            applicationIpAddress,
+            applicationMOTSId,
+            hostDetails,
             admins,
-            ETE1,
-            ETE2
-           
+
         })
 
         const saveApplication = await newApplication.save()

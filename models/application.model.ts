@@ -7,14 +7,16 @@ const applicationSchema = new mongoose.Schema({
     unique: true,
   },
   applicationDescription: String,
-  ApplicationIPAddress: String,
+  applicationIpAddress: String,
+  applicationMOTSId: String,
+  hostDetails: { type: String, enum: ["Cloud", "ONPRIME","Others"], required: true },
   admins: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],
-  
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -23,7 +25,6 @@ const applicationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
- 
 });
 const Application =
   mongoose.models.Application ||

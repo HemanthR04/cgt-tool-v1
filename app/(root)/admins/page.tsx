@@ -55,6 +55,7 @@ interface Userdata {
   firstname: string;
   lastname: string;
   email: string;
+  role :string;
 
 
 }
@@ -146,6 +147,7 @@ const page = () => {
                   <TableHead className="w-[100px]">Firstname</TableHead>
                   <TableHead>Lastname</TableHead>
                   <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
 
                 </TableRow>
               </TableHeader>
@@ -155,6 +157,7 @@ const page = () => {
                     <TableCell className="font-medium">{user.firstname}</TableCell>
                     <TableCell>{user.lastname}</TableCell>
                     <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.role}</TableCell>
 
                   </TableRow>
                 ))}

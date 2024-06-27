@@ -120,6 +120,7 @@ const NewURL = () => {
                   <SelectContent>
                     <SelectItem value="ETE1">ETE1</SelectItem>
                     <SelectItem value="ETE2">ETE2</SelectItem>
+                    <SelectItem value="R1">R1</SelectItem>
 
                   </SelectContent>
                 </Select>

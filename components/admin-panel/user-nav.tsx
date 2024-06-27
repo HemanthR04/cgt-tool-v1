@@ -36,7 +36,6 @@ interface Userdata {
 }
 
 export function UserNav() {
-  const [values, setValues] = useState<Application[]>([])
   const [fetchedData, setFetchedData] = useState<Userdata>();
 
 
@@ -46,7 +45,7 @@ export function UserNav() {
       .then((val) => setFetchedData(val.data))
   }, [])
 
-
+  
   console.log(fetchedData)
   return (
     <DropdownMenu>

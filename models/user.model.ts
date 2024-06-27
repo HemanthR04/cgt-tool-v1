@@ -28,9 +28,13 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
    },
-    applications:[
-        { type: Schema.Types.ObjectId, ref: 'Application' }
+   applications:[
+         {
+              type: Schema.Types.ObjectId,
+              ref: 'Application'
+         }
     ],
+   
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,

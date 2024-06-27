@@ -18,13 +18,16 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import axios from "axios"
 import toast, { Toaster } from "react-hot-toast"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 
 
 const formSchema = z.object({
   applicationName: z.string().min(2).max(50),
   applicationDescription:z.string().min(2).max(200),
-  applicationIPAddress:z.string().min(2).max(100)
+  applicationIpAddress:z.string().min(2).max(100),
+  applicationMOTSId:z.string().min(2).max(100),
+  hostDetails: z.string().min(2).max(10),
 })
 
 const NewApp = () => {
@@ -38,7 +41,9 @@ const NewApp = () => {
     defaultValues: {
       applicationName: "",
       applicationDescription:"",
-      applicationIPAddress:"",
+      applicationIpAddress:"",
+      applicationMOTSId:"" ,
+      hostDetails:""
     },
   })
  async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -101,7 +106,7 @@ const NewApp = () => {
       />
       <FormField
         control={form.control}
-        name="applicationIPAddress"
+        name="applicationIpAddress"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Application IP Address</FormLabel>
@@ -115,6 +120,45 @@ const NewApp = () => {
           </FormItem>
         )}
       />
+      <FormField
+        control={form.control}
+        name="applicationMOTSId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Application MOTS ID</FormLabel>
+            <FormControl>
+              <Input placeholder="" {...field} />
+            </FormControl>
+            <FormDescription>
+              Enter the MOTS ID of your application
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      /><FormField
+      control={form.control}
+      name="hostDetails"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Host Details</FormLabel>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder="Select A Host" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              <SelectItem value="Cloud">Cloud</SelectItem>
+              <SelectItem value="ONPRIME">ONPRIME</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
+
+            </SelectContent>
+          </Select>
+
+          <FormMessage />
+        </FormItem>
+      )}
+    />
       
         <Button type="submit">Submit</Button>
       </form>

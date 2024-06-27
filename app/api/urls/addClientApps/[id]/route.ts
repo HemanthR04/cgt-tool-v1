@@ -12,22 +12,21 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
-
+console.log(id)
   try {
     connectToDB();
-
+    
     const url = await URLS.findOne({ _id: id });
-
+    console.log(url)
     if (!url) {
       const errorResponse: ErrorResponse = { error: "URL not found" };
       return NextResponse.json(errorResponse, { status: 404 });
     }
 
-
     const reqBody = await request.json();
     const { clientApps } = reqBody;
 
-    console.log(reqBody);
+   
 
   
     const updatedURL = await URLS.findByIdAndUpdate(

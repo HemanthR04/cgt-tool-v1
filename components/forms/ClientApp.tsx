@@ -22,9 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { toast } from "@/components/ui/use-toast"
+import { Toaster, toast } from "react-hot-toast";
 import { Input } from "../ui/input"
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 
 interface Application {
@@ -32,22 +33,25 @@ interface Application {
   applicationName: string;
 }
 
+interface URLdata {
+  _id: string;
+  link: string;
+
+}
+
 const FormSchema = z.object({
   applicationName: z
     .string({
       required_error: "Please select an application.",
-    })
-    .email(),
-    environmentName: z
-    .string({
-      required_error: "Please select an application.",
     }),
+    url: z.string().min(2).max(50),
     clientAppName: z.string().min(2).max(50),
     clientAppURL: z.string().min(2).max(50),
 })
 
 export function ClientApp() {
   const [values, setValues] = useState<Application[]>([])
+  const [url, setURL] = useState<URLdata[]>([])
 
   useEffect(() => {
     fetch("http://localhost:3000/api/applications/fetchApplications")
@@ -55,20 +59,41 @@ export function ClientApp() {
       .then((val) => setValues(val.apps))
   }, [])
 
+  function handleAppChange(e: any) {  
+      fetch(`http://localhost:3000/api/urls/fetchUrl/${e}`)
+        .then((data) => data.json())
+        .then((val) => setURL(val))
+  }
+
+ 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/urls/addClientApps/${data.url}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          clientApps: {
+            clientAppName: data.clientAppName,
+            clientAppURL: data.clientAppURL,
+          },
+        }),
+      })
+
+      if (response.ok) {
+        toast.success("Client Application added successfully")
+      } else {
+        toast.error("Failed to add client application")
+      }
+    } catch (error) {
+      toast.error("Failed to add client application")
+    }
+    
   }
 
   return (
@@ -81,7 +106,10 @@ export function ClientApp() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Application Name</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select  onValueChange={(value) => {
+                field.onChange(value);
+                handleAppChange(value);
+              }} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select an application" />
@@ -103,20 +131,20 @@ export function ClientApp() {
         />
          <FormField
           control={form.control}
-          name="environmentName"
+          name="url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Environment</FormLabel>
+              <FormLabel>URL</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select an Environment" />
+                    <SelectValue placeholder="Select an URL" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="ETE1">ETE1</SelectItem>
-                  <SelectItem value="ETE2">ETE2</SelectItem>
-                  
+                {url.map((opts, i) => (
+                      <SelectItem key={i} value={opts._id}>{opts.link}</SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               <FormDescription>
